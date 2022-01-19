@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="https://demos.telerik.com/kendo-ui/grid/basic-usage">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.3.1207/styles/kendo.default-main.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2021.3.1207/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.3.1207/js/kendo.all.min.js"></script>
+</head>
+<body>
+    
+<div id="example">
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function () { // document load가 끝나면, 함수를 실행 
+            $("#grid").kendoGrid({ //그리드라는 id를 가진 태그를 선택해서 kendo-ui를 만드는 코드 
+                dataSource: { // 데이터를 불러오는 방식 
+                    type: "odata",
+                    transport: { //불러오고 싶은 데이터 주소 
+                        read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Customers" 
+                    },
+                    pageSize: 20 // 하나의 화면에 보여지는 갯수 
+                },
+                height: 560, // 테이블 전체의 크기 
+                groupable: true, //그룹화 기능이며 하나의 컬럼을 지정위치에 위치하면 그것을 기준으로 재정렬 되는 효과 
+                sortable: true, //정렬 순서 변경 가능 
+                pageable: { 
+                    refresh: false, 
+                    pageSizes: true, // 페이지에서 보여지는 갯수를 선택할 수 있는 드롭다운을 표시하고 싶을때 데이터 소스에 대한 설정을 제공   
+                    buttonCount: 5 //최대 노출 버튼 갯수 및 이후 ...처리 
+                },
+                columns: [{ //그리드내에서 보이는 헤더와 필드를 매칭하여 불러온 데이터에서 필드 명칭에 매칭해주는 것 
+                    template: "<div class='customer-photo'" +
+                    "style='background-image: url(../content/web/Customers/#:data.CustomerID#.jpg);'></div>" +
+                    "<div class='customer-name'>#: ContactName #</div>", //Html 화면 형식 
+                    field: "ContactName", // field: 불러올 데이터의 필드명 
+                    title: "Contact Name", //title: 화면에 출력할 필드명을 바인딩 하여 화면에 데이터를 출력한다. 
+                    width: 240 // 컬럼의 넓이  
+                }, {
+                    field: "ContactTitle",
+                    title: "Contact Title"
+                }, {
+                    field: "CompanyName",
+                    title: "Company Name"
+                }, {
+                    field: "Country",
+                    width: 150
+                }]
+            });
+        });
+    </script>
+</div>
+
+<style type="text/css">
+    .customer-photo {
+        display: inline-block; 
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);
+        margin-left: 5px;
+    }
+   .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+</style>
+</body>
+</html>
